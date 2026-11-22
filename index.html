@@ -109,8 +109,9 @@ h2{font-family:var(--en);font-weight:500;font-size:28px;letter-spacing:.06em;mar
 .tabs{display:flex;border-bottom:1px solid var(--line);margin:0 -28px 0}
 .tabs button{flex:1;background:none;border:0;padding:13px 0;font-size:13px;color:var(--gray);border-bottom:2px solid transparent;margin-bottom:-1px}
 .tabs button.on{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
-#map{height:300px;background:#e8e3d6;margin:22px -28px 0;position:relative}
-#map .ph-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;font-size:12.5px;color:var(--soft);line-height:1.7}
+.mapimg{display:block;margin:22px -28px 0;position:relative;background:#ece5d2;text-decoration:none;-webkit-touch-callout:none}
+.mapimg svg{display:block;width:100%;height:auto}
+.chip{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);background:rgba(28,28,28,.88);color:#fff;font-size:12px;padding:7px 14px;border-radius:16px;white-space:nowrap;letter-spacing:.02em}
 .pin{background:var(--ink);color:#fff;font-size:11px;padding:4px 8px;border-radius:12px;white-space:nowrap;transform:translate(-50%,-100%);box-shadow:0 2px 6px rgba(0,0,0,.3);font-family:var(--serif)}
 .pin.v{background:#a8332a}
 .pin.p{background:#4d4a43}
@@ -215,6 +216,13 @@ table.t th{background:var(--paper);font-weight:600}
 .pgrid img{width:100%;height:100%;object-fit:cover}
 .pgrid .pi.hid img{opacity:.25}
 .pgrid .pi button{position:absolute;left:4px;right:4px;bottom:4px;font-size:11px;padding:5px 0;background:rgba(0,0,0,.75);color:#fff;border:0}
+.plist{margin-top:12px}
+.prow{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);padding:6px 8px;margin-bottom:6px}
+.prow img{width:44px;height:58px;object-fit:cover;flex:0 0 auto}
+.prow .no{width:22px;text-align:center;font-family:var(--en);font-size:15px;color:var(--gray)}
+.prow .sp{flex:1}
+.prow .drag{touch-action:none;font-size:24px;line-height:1;padding:8px 10px;cursor:grab;color:var(--soft);user-select:none;-webkit-user-select:none}
+.prow.dragging{opacity:.7;box-shadow:0 4px 14px rgba(0,0,0,.25);background:#fbf8f1}
 .gbrow{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);text-align:left}
 .gbrow small{color:var(--gray)}
 </style>
@@ -308,7 +316,8 @@ table.t th{background:var(--paper);font-weight:600}
     <button data-t="bus">버스</button>
     <button data-t="car">자가용</button>
   </div>
-  <div id="map"><div class="ph-msg" id="mapMsg">지도를 불러오는 중이에요…</div></div>
+  <a class="mapimg" id="map" href="https://map.naver.com/p/search/%EB%B9%8C%EB%9D%BC%EB%93%9C%EC%A7%80%EB%94%94%20%EC%95%88%EC%82%B0" target="_blank" rel="noopener" aria-label="네이버 지도에서 보기"><svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="빌라드지디 안산 약도: 고잔역에서 도보 약 200m"><defs><style>.lb{font-family:'Noto Serif KR','AppleMyungjo','Apple SD Gothic Neo',serif;paint-order:stroke;stroke:#f6f1e7;stroke-width:3.5;stroke-linejoin:round;text-anchor:middle}</style></defs><rect width="600" height="600" fill="#ece5d2"/><path d="M0,225 L600,231" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M0,300 L600,306" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M0,345 L600,351" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M0,450 L600,456" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M0,485 L600,491" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M0,520 L600,526" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M70,205 L76,600" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M185,205 L191,600" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M290,205 L296,600" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M380,205 L386,600" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M445,205 L451,600" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M520,205 L526,600" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M70,0 L74,160" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M185,0 L189,160" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M290,0 L294,160" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M380,0 L384,160" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M445,0 L449,160" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M0,45 L600,49" stroke="#f8f4e8" stroke-width="5" fill="none"/><path d="M0,95 L600,99" stroke="#f8f4e8" stroke-width="5" fill="none"/><ellipse cx="58" cy="108" rx="56" ry="50" fill="#dfe3cf"/><circle cx="58" cy="108" r="26" fill="#e9ecda" stroke="#c9cfb5" stroke-width="2"/><path d="M400,192 C355,230 335,300 318,420 C300,500 270,540 232,590" stroke="#dfe3cf" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M400,192 C355,230 335,300 318,420 C300,500 270,540 232,590" stroke="#b9b49f" stroke-width="1.6" stroke-dasharray="5 5" fill="none"/><path d="M0,548 C120,562 260,550 380,568 C460,580 560,562 600,554 L600,600 L0,600 Z" fill="#dfe3cf"/><path d="M108,215 C104,320 112,430 100,552" stroke="#d3dbd8" stroke-width="11" stroke-linecap="round" fill="none"/><path d="M0,548 C120,562 260,550 380,568 C460,580 560,562 600,554" stroke="#d3dbd8" stroke-width="9" fill="none"/><path d="M0,155 L600,185" stroke="#cfc6b0" stroke-width="28" fill="none"/><path d="M0,155 L600,185" stroke="#fbf8f1" stroke-width="25" fill="none"/><path d="M0,165 L600,202" stroke="#1c1c1c" stroke-width="5" fill="none"/><path d="M0,165 L600,202" stroke="#f6f1e7" stroke-width="1.6" stroke-dasharray="7 7" fill="none"/><path d="M158,184 Q238,188 272,219" stroke="#a8332a" stroke-width="3.5" stroke-dasharray="7 6" stroke-linecap="round" fill="none"/><circle cx="150" cy="174" r="8.5" fill="#fff" stroke="#1c1c1c" stroke-width="3.5"/><circle cx="528" cy="198" r="8.5" fill="#fff" stroke="#1c1c1c" stroke-width="3.5"/><rect x="243" y="84" width="14" height="14" rx="2" fill="#b94a48"/><path d="M250,87 v8 M246,91 h8" stroke="#fff" stroke-width="2.4"/><circle cx="278" cy="231" r="13" fill="#a8332a" stroke="#fff" stroke-width="3"/><text x="278" y="236" font-size="14" fill="#fff" text-anchor="middle" font-family="sans-serif">♥</text><text class="lb" x="150" y="143" font-size="17" fill="#1c1c1c" font-weight="600" >고잔역 4호선</text><text class="lb" x="528" y="227" font-size="16" fill="#1c1c1c" font-weight="600" >중앙역</text><text class="lb" x="250" y="118" font-size="15" fill="#a24441" font-weight="400" >고려대 안산병원</text><text class="lb" x="58" y="52" font-size="14" fill="#6d7458" font-weight="400" >안산 와스타디움</text><text class="lb" x="353" y="38" font-size="14" fill="#6a655a" font-weight="400" >안산시청</text><text class="lb" x="358" y="298" font-size="14" fill="#8a6d2f" font-weight="400" >NC백화점</text><text class="lb" x="185" y="372" font-size="14" fill="#8a8578" font-weight="400" >푸르지오 5차</text><text class="lb" x="468" y="300" font-size="14" fill="#8a8578" font-weight="400" >푸르지오 3차</text><text class="lb" x="365" y="420" font-size="17" fill="#a39e90" font-weight="400" letter-spacing="6">호수동</text><text class="lb" x="167" y="535" font-size="13" fill="#8a8578" font-weight="400" >안산중앙도서관</text><text class="lb" x="278" y="267" font-size="20" fill="#1c1c1c" font-weight="700" >빌라드지디 안산</text><text class="lb" x="278" y="286" font-size="13" fill="#5d584f" font-weight="400" >7층 그레이스켈리홀</text><text class="lb" x="196" y="230" font-size="13" fill="#a8332a" font-weight="600" transform="rotate(14 196 230)">도보 약 200m</text><circle cx="560" cy="44" r="16" fill="#fbf8f1" stroke="#1c1c1c" stroke-width="1.5"/><path d="M560,30 l5,14 h-10z" fill="#1c1c1c"/><text x="560" y="63" font-size="11" text-anchor="middle" fill="#1c1c1c" font-family="serif">N</text><path d="M480,586 h64 M480,581 v10 M544,581 v10" stroke="#1c1c1c" stroke-width="1.6" fill="none"/><text class="lb" x="512" y="578" font-size="12" fill="#1c1c1c" font-weight="400" >200m</text></svg><span class="chip">탭하면 네이버 지도로 이동 ↗</span></a>
+  <div id="mapMsg" hidden></div>
   <div class="addr"><b>빌라드지디 안산</b>경기도 안산시 단원구 광덕4로 140 (고잔동 703)<br>gd팰리스타워 7층 그레이스켈리홀<br>Tel. 031-487-8100</div>
   <div class="row">
     <a class="btn sm" id="btnNaver" target="_blank" rel="noopener">네이버 지도에서 보기</a>
@@ -403,8 +412,10 @@ table.t th{background:var(--paper);font-weight:600}
 <section class="paper">
   <p class="eyebrow">Memories</p>
   <h2>결혼식 사진·영상 올리기</h2>
-  <p class="sub">예식 당일 담아주신 사진과 영상을 공유해 주세요.<br>구글 로그인 후 올릴 수 있어요 (최대 500MB).</p>
-  <a class="btn fill" id="btnForm" target="_blank" rel="noopener">사진·영상 올리러 가기</a>
+  <p class="sub">예식 당일 담아주신 사진과 영상을 공유해 주세요.<br>편하신 방법으로 올려주시면 돼요.</p>
+  <a class="btn fill" id="btnForm" target="_blank" rel="noopener">구글로 올리기 (최대 500MB)</a>
+  <a class="btn" id="btnKakao" href="https://open.kakao.com/o/syjGCaYi" target="_blank" rel="noopener" style="margin-top:8px">카카오톡으로 보내기</a>
+  <p class="note" style="line-height:1.7;word-break:keep-all">구글은 계정 로그인이 필요해요.<br>어려우시면 카카오톡 오픈채팅으로 편하게 보내주세요 :)</p>
 </section>
 
 <footer>
@@ -463,27 +474,12 @@ table.t th{background:var(--paper);font-weight:600}
 /* ================= 설정 (여기만 채우면 됩니다) ================= */
 const CONFIG = {
   SITE_URL: 'https://rodywody-html.github.io/invite_wedding/', // GitHub Pages 주소 (끝에 / 포함)
-  API_URL: 'https://script.google.com/macros/s/AKfycby79vJXY3H0YEFbXbD9-SeqDpbkFPKOCtiPaiWMDWEUnMI2ED9LP09spfYeggA_Id1Lsw/exec',      // Apps Script 웹 앱 URL (…/exec)
-  NAVER_KEY: '',    // 네이버 클라우드 Maps Client ID (ncpKeyId)
-  KAKAO_KEY: '',    // 카카오 JavaScript 키
+  API_URL: 'https://script.google.com/macros/s/AKfycbwQ6xuoiw9qB1fQyPbfqzfNnqjR3rVou_4lou_G0hkRCuu6rFD_M3brSz_rmCnuQ9gP/exec',      // Apps Script 웹 앱 URL (…/exec)
+  KAKAO_KEY: '2e37861e8aca0673e0b4ea37a662e0ba',    // 카카오 JavaScript 키
   FORM_URL: 'https://forms.gle/t4VN9F2s5yLNutgT6'
 };
 const WEDDING = { y:2027, m:4, d:3, iso:'2027-04-03T12:40:00+09:00', title:'홍수빈 ♥ 고수빈 결혼식',
   place:'빌라드지디 안산 7층 그레이스켈리홀', addr:'경기도 안산시 단원구 광덕4로 140 (고잔동 703)' };
-/* 지도 좌표 설정. lat/lng 를 직접 넣으면 그 값을 우선 사용, 없으면 주소로 검색합니다 */
-const MAPCFG = {
-  venue:   { name:'빌라드지디', addr:'경기도 안산시 단원구 광덕4로 140' },
-  station: { name:'고잔역 2번 출구', lat:37.3165, lng:126.8232, approx:true }, // ⚠ 대략 위치 – 네이버 지도에서 확인 후 수정
-  route:   [], // 고잔역→예식장 경유 좌표 [[lat,lng],…] (비우면 두 지점을 직선으로 연결)
-  parking: [
-    { name:'월드 주차타워', addr:'경기도 안산시 단원구 광덕3로 135-18' },
-    { name:'화랑 주차타워', addr:'경기도 안산시 단원구 광덕서로 106' }
-  ],
-  ic: [
-    { name:'안산IC',  addr:'경기도 안산시 상록구 오리골길 15-1' },
-    { name:'서안산IC', lat:null, lng:null } // ⚠ 좌표를 넣으면 지도에 표시됩니다
-  ]
-};
 const DEFAULT_PHOTOS = Array.from({length:17},(_,i)=>'p'+String(i+1).padStart(2,'0'));
 const CONTACTS = [
   ['신랑','홍수빈','010-3863-4639'],['신부','고수빈','010-9150-7063'],
@@ -577,12 +573,19 @@ $$('.acc>button').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('on'
 let photos=[]; // {id,type,thumb,full}
 function defaultPhoto(id){return {id,type:'default',thumb:'images/thumb/'+id+'.jpg',full:'images/full/'+id+'.jpg'}}
 function driveUrl(fid,w){return 'https://lh3.googleusercontent.com/d/'+fid+'=w'+w}
+function applyOrder(list,order){
+  const idx=new Map((order||[]).map((k,i)=>[k,i]));
+  return list.map((p,i)=>[p,i]).sort((a,b)=>{
+    const ia=idx.has(a[0].id)?idx.get(a[0].id):1e6+a[1], ib=idx.has(b[0].id)?idx.get(b[0].id):1e6+b[1];
+    return ia-ib;
+  }).map(x=>x[0]);
+}
 async function loadPhotos(){
-  let hidden=[],added=[];
-  if(!DEMO){try{const r=await apiGet('photos_list');if(r.ok){hidden=r.hidden||[];added=r.added||[]}}catch(e){}}
-  window.__hidden=hidden;window.__added=added;
-  photos=DEFAULT_PHOTOS.filter(id=>!hidden.includes(id)).map(defaultPhoto)
-    .concat(added.map(a=>({id:a.id,type:'added',thumb:driveUrl(a.fileId,600),full:driveUrl(a.fileId,1400)})));
+  let hidden=[],added=[],order=[];
+  if(!DEMO){try{const r=await apiGet('photos_list');if(r.ok){hidden=r.hidden||[];added=r.added||[];order=r.order||[]}}catch(e){}}
+  window.__hidden=hidden;window.__added=added;window.__order=order;
+  photos=applyOrder(DEFAULT_PHOTOS.filter(id=>!hidden.includes(id)).map(defaultPhoto)
+    .concat(added.map(a=>({id:a.id,type:'added',thumb:driveUrl(a.fileId,600),full:driveUrl(a.fileId,1400)}))),order);
   renderGallery();
 }
 function renderGallery(){
@@ -628,62 +631,12 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'){tr.style.scrollBehavior='smooth';tr.scrollLeft-=tr.clientWidth}
 });
 
-/* ---------- 지도 (네이버) ---------- */
-let mapObj=null,mapGroups={},mapReady=false;
-function geocode(addr){
-  return new Promise(res=>{
-    naver.maps.Service.geocode({query:addr},(st,r)=>{
-      try{const a=r.v2.addresses[0];res(a?new naver.maps.LatLng(+a.y,+a.x):null)}catch(e){res(null)}
-    });
-  });
-}
-async function resolve(p){
-  if(p.lat!=null&&p.lng!=null)return new naver.maps.LatLng(p.lat,p.lng);
-  return p.addr?await geocode(p.addr):null;
-}
-function pin(map,pos,label,cls){
-  return new naver.maps.Marker({position:pos,map:null,icon:{content:'<div class="pin '+cls+'">'+label+'</div>',anchor:new naver.maps.Point(0,0)}});
-}
-async function buildMap(){
-  const venue=await resolve(MAPCFG.venue);
-  if(!venue){$('#mapMsg').textContent='지도를 불러오지 못했어요. 아래 버튼으로 네이버 지도를 열어 주세요.';return}
-  $('#mapMsg').remove();
-  mapObj=new naver.maps.Map('map',{center:venue,zoom:16,zoomControl:true,zoomControlOptions:{position:naver.maps.Position.TOP_RIGHT},scaleControl:false,mapDataControl:false,logoControl:true});
-  const v=pin(mapObj,venue,'빌라드지디 7F','v');
-  mapGroups.subway=[v];mapGroups.bus=[v];mapGroups.car=[v];
-  const st=await resolve(MAPCFG.station);
-  if(st){
-    mapGroups.subway.push(pin(mapObj,st,'고잔역 2번 출구','i'));
-    const path=[st].concat((MAPCFG.route||[]).map(c=>new naver.maps.LatLng(c[0],c[1]))).concat([venue]);
-    mapGroups.subway.push(new naver.maps.Polyline({path,strokeColor:'#a8332a',strokeWeight:4,strokeStyle:'shortdash',strokeOpacity:.9,map:null}));
-    mapGroups.bus.push(pin(mapObj,st,'고잔역뒤 정류장','i'));
-  }
-  for(const p of MAPCFG.parking){const pos=await resolve(p);if(pos)mapGroups.car.push(pin(mapObj,pos,'P '+p.name,'p'))}
-  for(const p of MAPCFG.ic){const pos=await resolve(p);if(pos)mapGroups.car.push(pin(mapObj,pos,p.name,'i'))}
-  mapReady=true;showMapTab('subway');
-}
+/* ---------- 오시는 길 탭 ---------- */
 function showMapTab(t){
   $$('#mapTabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
   ['subway','bus','car'].forEach(k=>$('#how-'+k).classList.toggle('on',k===t));
-  if(!mapReady)return;
-  Object.values(mapGroups).flat().forEach(o=>o.setMap(null));
-  const g=mapGroups[t];g.forEach(o=>o.setMap(mapObj));
-  const pts=g.filter(o=>o.getPosition).map(o=>o.getPosition());
-  if(pts.length>1){
-    let b=new naver.maps.LatLngBounds(pts[0],pts[0]);pts.forEach(p=>b.extend(p));
-    mapObj.fitBounds(b,{top:50,right:40,bottom:30,left:40});
-  }else mapObj.setCenter(pts[0]);
 }
 $$('#mapTabs button').forEach(b=>b.onclick=()=>showMapTab(b.dataset.t));
-function loadMap(){
-  if(!CONFIG.NAVER_KEY){$('#mapMsg').textContent='지도 설정 전입니다. (NAVER_KEY 입력 후 표시) 아래 버튼으로 네이버 지도를 열 수 있어요.';return}
-  const s=document.createElement('script');
-  s.src='https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId='+encodeURIComponent(CONFIG.NAVER_KEY)+'&submodules=geocoder';
-  s.onload=buildMap;s.onerror=()=>{$('#mapMsg').textContent='지도를 불러오지 못했어요. 아래 버튼으로 네이버 지도를 열어 주세요.'};
-  document.head.appendChild(s);
-}
-new IntersectionObserver((en,ob)=>{if(en[0].isIntersecting){ob.disconnect();loadMap()}},{rootMargin:'400px'}).observe($('#mapSec'));
-window.navermap_authFailure=()=>{const m=$('#mapMsg');if(m)m.textContent='네이버 지도 인증에 실패했어요. Client ID와 등록한 웹 서비스 URL을 확인해 주세요.'};
 
 /* ---------- 참석 여부 ---------- */
 let cnt=1;
@@ -756,7 +709,7 @@ $('#gSend').onclick=async()=>{
   function sync(){b.classList.toggle('off',a.paused)}
   b.onclick=()=>{if(a.paused){userPaused=false;a.play().catch(()=>{});}else{userPaused=true;a.pause()}sync()};
   a.addEventListener('play',sync);a.addEventListener('pause',sync);sync();
-   function first(){if(started||userPaused)return;a.volume=.6;a.play().then(()=>{started=true;sync()}).catch(()=>{})}
+  function first(){if(started||userPaused)return;a.volume=.6;a.play().then(()=>{started=true;sync()}).catch(()=>{})}
   first(); // 열자마자 재생 시도 (막히면 아래 터치 때 시작)
   ['pointerdown','touchend','click','keydown'].forEach(ev=>document.addEventListener(ev,first,{passive:true}));
   document.addEventListener('visibilitychange',()=>{if(document.hidden)a.pause();else if(started&&!userPaused)a.play().catch(()=>{})});
@@ -824,6 +777,25 @@ async function resizeToDataURL(file){
   const c=document.createElement('canvas');c.width=Math.round(bmp.width*sc);c.height=Math.round(bmp.height*sc);
   c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.85);
 }
+function enableDrag(list,onDone){
+  list.querySelectorAll('.drag').forEach(hd=>{
+    hd.addEventListener('pointerdown',e=>{
+      e.preventDefault();
+      const row=hd.closest('.prow');row.classList.add('dragging');
+      try{hd.setPointerCapture(e.pointerId)}catch(x){}
+      const scroller=$('#admBody');
+      const move=ev=>{
+        const y=ev.clientY;
+        if(y<110)scroller.scrollTop-=12;else if(y>innerHeight-90)scroller.scrollTop+=12;
+        let before=null;
+        for(const r of [...list.children].filter(r=>r!==row)){const b=r.getBoundingClientRect();if(y<b.top+b.height/2){before=r;break}}
+        if(before!==row.nextElementSibling)list.insertBefore(row,before);
+      };
+      const up=()=>{row.classList.remove('dragging');hd.removeEventListener('pointermove',move);hd.removeEventListener('pointerup',up);hd.removeEventListener('pointercancel',up);onDone()};
+      hd.addEventListener('pointermove',move);hd.addEventListener('pointerup',up);hd.addEventListener('pointercancel',up);
+    });
+  });
+}
 async function admPhoto(box){
   box.innerHTML='';
   const add=el('button','btn fill','＋ 사진 추가');const inp=el('input');inp.type='file';inp.accept='image/*';inp.multiple=true;inp.style.display='none';
@@ -835,21 +807,48 @@ async function admPhoto(box){
     }
     toast('추가했어요');await loadPhotos();admTab('photo');
   };
-  box.append(add,inp,el('p','note','추가한 사진은 기본 사진 뒤에 붙어요. 삭제는 "숨기기"로 되돌릴 수 있어요(기본 사진).'));
-  const g=el('div','pgrid');
-  DEFAULT_PHOTOS.forEach(id=>{
-    const hid=(window.__hidden||[]).includes(id),d=el('div','pi'+(hid?' hid':''));
-    const im=el('img');im.src='images/thumb/'+id+'.jpg';
-    const b=el('button','',hid?'다시 보이기':'숨기기');
-    b.onclick=async()=>{const r=await apiPost({action:hid?'default_show':'default_hide',token:admToken(),key:id});if(!await guard(r))return;await loadPhotos();admTab('photo')};
-    d.append(im,b);g.appendChild(d);
+  box.append(add,inp,el('p','note','순서 바꾸기: ▲▼ 버튼 또는 ≡ 를 누른 채 끌어서 놓기 · 바꾸면 바로 저장돼요'));
+  const list=el('div','plist');box.appendChild(list);
+  const renum=()=>[...list.children].forEach((r,i)=>r.querySelector('.no').textContent=i+1);
+  let saving=Promise.resolve();
+  const save=()=>{
+    const order=[...list.children].map(r=>r.dataset.id);
+    saving=saving.then(async()=>{
+      try{
+        const r=await apiPost({action:'photo_order',token:admToken(),order});
+        if(!await guard(r))return;
+        if(!r.ok){toast(r.error||'저장에 실패했어요');return}
+        window.__order=order;photos=applyOrder(photos,order);renderGallery();toast('순서를 저장했어요');
+      }catch(e){toast('저장에 실패했어요')}
+    });
+  };
+  photos.forEach(p=>{
+    const row=el('div','prow');row.dataset.id=p.id;
+    const im=el('img');im.src=p.thumb;im.alt='';
+    const sp=el('span','sp');
+    const up=el('button','btn sm','▲'),dn=el('button','btn sm','▼'),hd=el('span','drag','≡');
+    up.onclick=()=>{const pr=row.previousElementSibling;if(pr){list.insertBefore(row,pr);renum();save()}};
+    dn.onclick=()=>{const nx=row.nextElementSibling;if(nx){list.insertBefore(nx,row);renum();save()}};
+    const del=el('button','btn sm',p.type==='default'?'숨기기':'삭제');
+    del.onclick=async()=>{
+      let r;
+      if(p.type==='default')r=await apiPost({action:'default_hide',token:admToken(),key:p.id});
+      else{if(!confirm('이 사진을 삭제할까요?'))return;r=await apiPost({action:'photo_remove',token:admToken(),id:p.id})}
+      if(!await guard(r))return;await loadPhotos();admTab('photo');
+    };
+    row.append(el('span','no',''),im,sp,up,dn,hd,del);list.appendChild(row);
   });
-  (window.__added||[]).forEach(a=>{
-    const d=el('div','pi'),im=el('img');im.src=driveUrl(a.fileId,300);
-    const b=el('button','','삭제');b.onclick=async()=>{if(!confirm('이 사진을 삭제할까요?'))return;const r=await apiPost({action:'photo_remove',token:admToken(),id:a.id});if(!await guard(r))return;await loadPhotos();admTab('photo')};
-    d.append(im,b);g.appendChild(d);
-  });
-  box.appendChild(g);
+  renum();enableDrag(list,()=>{renum();save()});
+  const hid=window.__hidden||[];
+  if(hid.length){
+    box.appendChild(el('p','note','숨긴 기본 사진 (다시 보이게 하면 맨 뒤에 붙어요)'));
+    hid.forEach(id=>{
+      const row=el('div','prow'),im=el('img');im.src='images/thumb/'+id+'.jpg';im.style.opacity='.4';
+      const sp=el('span','sp');const b=el('button','btn sm','다시 보이기');
+      b.onclick=async()=>{const r=await apiPost({action:'default_show',token:admToken(),key:id});if(!await guard(r))return;await loadPhotos();admTab('photo')};
+      row.append(im,sp,b);box.appendChild(row);
+    });
+  }
 }
 function inviteLink(name){return CONFIG.SITE_URL+(name?'?to='+encodeURIComponent(name):'')}
 function admShare(box){
