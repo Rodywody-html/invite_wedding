@@ -756,8 +756,9 @@ $('#gSend').onclick=async()=>{
   function sync(){b.classList.toggle('off',a.paused)}
   b.onclick=()=>{if(a.paused){userPaused=false;a.play().catch(()=>{});}else{userPaused=true;a.pause()}sync()};
   a.addEventListener('play',sync);a.addEventListener('pause',sync);sync();
-  function first(){if(started||userPaused)return;started=true;a.volume=.6;a.play().catch(()=>{started=false})}
-  ['touchend','click'].forEach(ev=>document.addEventListener(ev,first,{once:false,passive:true}));
+   function first(){if(started||userPaused)return;a.volume=.6;a.play().then(()=>{started=true;sync()}).catch(()=>{})}
+  first(); // 열자마자 재생 시도 (막히면 아래 터치 때 시작)
+  ['pointerdown','touchend','click','keydown'].forEach(ev=>document.addEventListener(ev,first,{passive:true}));
   document.addEventListener('visibilitychange',()=>{if(document.hidden)a.pause();else if(started&&!userPaused)a.play().catch(()=>{})});
 })();
 
